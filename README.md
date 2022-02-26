@@ -14,17 +14,17 @@ Easily turn an entity into a namespacedkey of the name of your choice, then turn
 Add this to your repositories
 ```HTML
 <repository>
-       <id>jitpack.io</id>
-       <url>https://jitpack.io</url>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
 </repository>
 ```
 
 Then add this to your dependencies
  ```HTML
 <dependency>
-	    <groupId>com.github.2Hex</groupId>
-	    <artifactId>EntitySerializer</artifactId>
-	    <version>Tag</version>
+    <groupId>com.github.2Hex</groupId>
+    <artifactId>EntitySerializer</artifactId>
+    <version>Tag</version>
 </dependency>
 ```
 
@@ -34,18 +34,18 @@ Use this:
 
   ```HTML
 	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+repositories {
+...
+maven { url 'https://jitpack.io' }
+}
+}
 ```
 And the dependency:
 
 ```HTML
 	dependencies {
-	        implementation 'com.github.2Hex:EntitySerializer:Tag'
-	}
+implementation 'com.github.2Hex:EntitySerializer:Tag'
+}
 ```
 
 # Usage
@@ -72,16 +72,20 @@ Then make a static getter:
 
 ```Java
 public static EntityHolder getHolder() {
-  return holder;
-}
+        return holder;
+        }
 ```
 Then later in whatever class, you can use
 ```Java
 NamespacedKey namespacedkey = new NamespacedKey(pluginInstance, "your-key-here");
-YourMainClass.getHolder().serialize(entity, namespackedkey);
-Entity entityDeserialized = YourMainClass.getHolder().deserialize(namespacedkey);
+        YourMainClass.getHolder().serialize(entity, namespackedkey);
+        Entity entityDeserialized = YourMainClass.getHolder().deserialize(namespacedkey);
 ```
 
+And to Destroy a serialization (Remove its access, and its place in server storage) Use:
+```Java
+YourMainClass.getHolder().destroy(namespacedkey)
+```
 Note that you should have a namespacedkey for each entity.
 
 Or use
@@ -93,6 +97,3 @@ Second one returns EntityResult, and is preferred.
 
 You can invoke `spawnAndGet()` (which will return the entity and spawn it) on the EntityResult later, or `spawn`.
 
-
-  
-  
