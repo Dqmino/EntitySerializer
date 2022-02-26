@@ -97,3 +97,4 @@ Second one returns EntityResult, and is preferred.
 
 You can invoke `spawnAndGet()` (which will return the entity and spawn it) on the EntityResult later, or `spawn`.
 
+
