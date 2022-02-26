@@ -11,6 +11,9 @@ import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Implementation of Factory, a Structure Factory that produces Structures.
+ */
 public class StructureFactory implements Factory<Entity, NamespacedKey, Structure> {
 
     /**

@@ -61,7 +61,6 @@ public class EntityHolder implements Serializer<Entity, NamespacedKey> {
      * @param alpha         Doesn't matter what this is set to, this is just to overload methods.
      * @return deserialized entity from Name-spaced Key.
      */
-
     public EntityResult deserialize(NamespacedKey toDeserialize, boolean alpha) {
 
         Preconditions.checkArgument(toDeserialize != null);

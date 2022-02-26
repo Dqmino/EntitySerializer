@@ -18,6 +18,11 @@ public class EntityResult {
         this.structure = structure;
     }
 
+    /**
+     *  Spawns the entity, and returns it.
+     * @param location Location to spawn entity at.
+     * @return Entity spawned.
+     */
     public Entity spawnAndGet(Location location) {
 
         spawn(location);
@@ -29,6 +34,10 @@ public class EntityResult {
         return closest.orElseThrow(() -> new RuntimeException("Can't find entity to return."));
     }
 
+    /**
+     * Spawns the Entity at the given Location.
+     * @param loc Location to spawn entity at.
+     */
     public void spawn(Location loc) {
         structure.place(loc, true, StructureRotation.NONE, Mirror.NONE,
                 0, 0f, EntitySerializer.getRandom());

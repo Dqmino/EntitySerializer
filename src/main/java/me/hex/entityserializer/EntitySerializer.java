@@ -7,6 +7,9 @@ import org.bukkit.structure.StructureManager;
 
 import java.util.Random;
 
+/**
+ * API's Main class, holding the core and essentials of the library.
+ */
 public final class EntitySerializer {
 
     private static JavaPlugin plugin;
