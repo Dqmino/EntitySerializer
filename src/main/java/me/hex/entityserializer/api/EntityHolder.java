@@ -2,10 +2,13 @@ package me.hex.entityserializer.api;
 
 import com.google.common.base.Preconditions;
 import me.hex.entityserializer.EntitySerializer;
+import me.hex.entityserializer.core.StructureFactory;
 import me.hex.entityserializer.core.interfaces.Serializer;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
 import org.bukkit.structure.Structure;
+
+import java.util.concurrent.CompletableFuture;
 
 public class EntityHolder implements Serializer<Entity, NamespacedKey> {
 
@@ -72,4 +75,17 @@ public class EntityHolder implements Serializer<Entity, NamespacedKey> {
         return new EntityResult(structure);
     }
 
+    /**
+     * Destroys a serialization
+     * @param toDestroy Key representing the serialization to destroy
+     * @return true if successful false otherwise.
+     */
+    @Override
+    public CompletableFuture<Boolean> destroy(NamespacedKey toDestroy) {
+
+        StructureFactory factory = EntitySerializer.getFactory();
+        factory.destroy(toDestroy);
+
+        return factory.destroy(toDestroy);
+    }
 }

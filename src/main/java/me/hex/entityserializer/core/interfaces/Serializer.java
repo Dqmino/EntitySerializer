@@ -1,5 +1,7 @@
 package me.hex.entityserializer.core.interfaces;
 
+import java.util.concurrent.CompletableFuture;
+
 /**
  *
  * @param <T> Info needed to serialize
@@ -21,4 +23,11 @@ public interface Serializer<T, Y> {
      * @return Deserialized form. (T)
      */
     T deserialize(Y toDeserialize);
+
+    /**
+     * Destroys the serialization
+     * @param toDestroy Serial Key to destroy
+     * @return true if successful, otherwise false
+     */
+    CompletableFuture<Boolean> destroy(Y toDestroy);
 }

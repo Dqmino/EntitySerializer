@@ -1,5 +1,7 @@
 package me.hex.entityserializer.core.interfaces;
 
+import java.util.concurrent.CompletableFuture;
+
 /**
  * @param <T> Identifier
  * @param <Y> Key
@@ -14,5 +16,6 @@ public interface Factory<T, Y, Z> {
      * @return Result of the creation
      */
     Z create(T identifier, Y key);
+    CompletableFuture<Boolean> destroy(Y key);
 
 }

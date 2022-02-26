@@ -1,6 +1,7 @@
 package me.hex.entityserializer.api;
 
 import me.hex.entityserializer.EntitySerializer;
+import me.hex.entityserializer.core.exceptions.EntityNotFoundException;
 import org.bukkit.Location;
 import org.bukkit.block.structure.Mirror;
 import org.bukkit.block.structure.StructureRotation;
@@ -22,8 +23,9 @@ public class EntityResult {
      *  Spawns the entity, and returns it.
      * @param location Location to spawn entity at.
      * @return Entity spawned.
+     * @throws EntityNotFoundException if entity was not found. (Should not happen)
      */
-    public Entity spawnAndGet(Location location) {
+    public Entity spawnAndGet(Location location) throws EntityNotFoundException {
 
         spawn(location);
 
@@ -31,7 +33,8 @@ public class EntityResult {
                 .min((e1, e2) -> (int) (e2.getLocation().distanceSquared(location)
                         - e1.getLocation().distanceSquared(location)));
 
-        return closest.orElseThrow(() -> new RuntimeException("Can't find entity to return."));
+        return closest.orElseThrow(() -> new EntityNotFoundException
+                ("Cannot find entity at location"));
     }
 
     /**

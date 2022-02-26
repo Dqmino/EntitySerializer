@@ -32,7 +32,7 @@ public class StructureFactory implements Factory<Entity, NamespacedKey, Structur
 
 
         struct.fill(entity.getLocation(), entity.getLocation()
-                .add(0, 2, 0), true);
+                .add(0, 3, 0), true);
 
         manager.registerStructure(keyToStruct, struct);
 
@@ -58,5 +58,28 @@ public class StructureFactory implements Factory<Entity, NamespacedKey, Structur
         }
 
         return struct;
+    }
+
+    /**
+     * Destroys a Structure
+     * @param key Key of structure to destroy.
+     * @return true if successful, false otherwise.
+     */
+    @Override
+    public CompletableFuture<Boolean> destroy(NamespacedKey key) {
+        StructureManager manager = EntitySerializer.getManager();
+        manager.unregisterStructure(key);
+
+        CompletableFuture<Boolean> future = CompletableFuture.supplyAsync(() -> {
+            try {
+                manager.deleteStructure(key);
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }).toCompletableFuture();
+
+        return future;
     }
 }
