@@ -86,7 +86,7 @@ And to Destroy a serialization (Remove its access, and its place in server stora
 ```Java
 YourMainClass.getHolder().destroy(namespacedkey)
 ```
-Note that you should have a namespacedkey for each entity.
+Note that you should have a unique namespacedkey for each unique entity serialization.
 
 Or use
 ```Java
