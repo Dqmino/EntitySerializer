@@ -71,8 +71,8 @@ public final class EntitySerializer {
      */
     private void initialize() {
         manager = plugin.getServer().getStructureManager();
-        entityHolder = new EntityHolder(manager, factory);
         factory = new StructureFactory(manager);
+        entityHolder = new EntityHolder(manager, factory);
         random = new Random();
     }
 
