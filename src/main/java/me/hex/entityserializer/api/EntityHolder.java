@@ -38,13 +38,11 @@ public class EntityHolder implements Serializer<Entity, NamespacedKey, EntityRes
     }
 
     /**
-     * [MIGHT NOT WORK]
-     * if it doesn't.
      * Deserializes an entity from its corresponding Name-spaced Key specified.
      * Note that this method uses 1.17.1 Structures API.
      *
      * @param toDeserialize Key corresponding to the entity serialized.
-     * @return deserialized entity from Name-spaced Key.
+     * @return deserialized EntityResult from Name-spaced Key.
      */
     @Override
     public EntityResult deserialize(NamespacedKey toDeserialize) {
@@ -65,6 +63,7 @@ public class EntityHolder implements Serializer<Entity, NamespacedKey, EntityRes
      *
      * @param toDeserialize Key corresponding to the entity serialized.
      * @return deserialized entity from Name-spaced Key.
+     * @deprecated Might not work, use deserialize(NamespacedKey)
      */
 
     public Entity read(NamespacedKey toDeserialize) {
