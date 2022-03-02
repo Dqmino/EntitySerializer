@@ -15,7 +15,7 @@ public class EntityHolder implements Serializer<Entity, NamespacedKey, EntityRes
     private final StructureManager manager;
     private final StructureFactory factory;
 
-    public EntityHolder(StructureManager manager, StructureFactory factory){
+    public EntityHolder(StructureManager manager, StructureFactory factory) {
         this.manager = manager;
         this.factory = factory;
     }
@@ -25,14 +25,15 @@ public class EntityHolder implements Serializer<Entity, NamespacedKey, EntityRes
      * Note that this method uses 1.17.1 Structures API.
      *
      * @param toSerialize Key to use for later deserializing.
+     * @param removeAfter Whether to remove after serializing.
      * @return Name-spaced Key used to serialize.
      */
     @Override
-    public NamespacedKey serialize(Entity toSerialize, NamespacedKey serialKey) {
+    public NamespacedKey serialize(Entity toSerialize, NamespacedKey serialKey, boolean removeAfter) {
 
         Preconditions.checkArgument(toSerialize != null && serialKey != null);
 
-        factory.create(toSerialize, serialKey);
+        factory.create(toSerialize, serialKey, removeAfter);
 
         return serialKey;
     }
@@ -84,6 +85,7 @@ public class EntityHolder implements Serializer<Entity, NamespacedKey, EntityRes
 
     /**
      * Destroys a serialization
+     *
      * @param toDestroy Key representing the serialization to destroy
      * @return true if successful false otherwise.
      */

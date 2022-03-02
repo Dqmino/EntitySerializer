@@ -17,7 +17,7 @@ public class StructureFactory implements Factory<Entity, NamespacedKey, Structur
 
     private final StructureManager manager;
 
-    public StructureFactory(StructureManager manager){
+    public StructureFactory(StructureManager manager) {
         this.manager = manager;
     }
 
@@ -30,10 +30,9 @@ public class StructureFactory implements Factory<Entity, NamespacedKey, Structur
      * @return Structure created..
      */
     @Override
-    public Structure create(Entity entity, NamespacedKey keyToStruct) {
+    public Structure create(Entity entity, NamespacedKey keyToStruct, boolean removeAfter) {
 
         Structure struct = manager.createStructure();
-
 
         struct.fill(entity.getLocation(), entity.getLocation()
                 .add(1, 1, 1), true);
@@ -51,7 +50,7 @@ public class StructureFactory implements Factory<Entity, NamespacedKey, Structur
         }).toCompletableFuture();
 
         try {
-            if (future.get()) {
+            if (removeAfter && future.get()) {
                 future.thenApply((e) -> {
                     entity.remove();
                     return null;
@@ -66,6 +65,7 @@ public class StructureFactory implements Factory<Entity, NamespacedKey, Structur
 
     /**
      * Destroys a Structure
+     *
      * @param key Key of structure to destroy.
      * @return true if successful, false otherwise.
      */

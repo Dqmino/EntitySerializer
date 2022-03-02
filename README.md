@@ -1,4 +1,6 @@
 # EntitySerializer
+[![](https://jitpack.io/v/2Hex/EntitySerializer.svg)](https://jitpack.io/#2Hex/EntitySerializer)
+
 Serializes Entities, Basically converting them to namespacedkeys that can be used later, not exactly serializing with its common definition.
 
 **Note:**
@@ -54,6 +56,7 @@ First, you have to create an object of EntitySerializer in your onEnable:
 
 ```Java
 EntitySerializer entitySerializer = new EntitySerializer();
+entitySerializer.setPlugin(this);
 ```
 
 Then make a variable, referencing the class EntityHolder:
