@@ -10,6 +10,7 @@ import org.bukkit.structure.Structure;
 
 import java.util.Arrays;
 import java.util.Optional;
+import java.util.Random;
 
 public class EntityResult {
 
@@ -43,7 +44,7 @@ public class EntityResult {
      */
     public void spawn(Location loc) {
         structure.place(loc, true, StructureRotation.NONE, Mirror.NONE,
-                0, 0f, EntitySerializer.getRandom());
+                0, 0f, new Random());
     }
 
 }

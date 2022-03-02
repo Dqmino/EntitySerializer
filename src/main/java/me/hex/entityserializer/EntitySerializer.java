@@ -12,17 +12,18 @@ import java.util.Random;
  */
 public final class EntitySerializer {
 
-    private static JavaPlugin plugin;
-    private static EntityHolder entityHolder;
-    private static StructureFactory factory;
-    private static Random random;
+    private JavaPlugin plugin;
+    private EntityHolder entityHolder;
+    private StructureFactory factory;
+    private Random random;
+    private StructureManager manager;
 
     /**
      * Gets the Main instance.
      *
      * @return Main instance of User's plugin if set, otherwise null
      */
-    public static JavaPlugin getPlugin() {
+    public JavaPlugin getPlugin() {
         return plugin;
     }
 
@@ -32,8 +33,8 @@ public final class EntitySerializer {
      *
      * @param plugin User's Main Instance.
      */
-    public static void setPlugin(JavaPlugin plugin) {
-        EntitySerializer.plugin = plugin;
+    public void setPlugin(JavaPlugin plugin) {
+        this.plugin = plugin;
         initialize();
     }
 
@@ -42,7 +43,7 @@ public final class EntitySerializer {
      *
      * @return true if set, otherwise false.
      */
-    public static boolean isPluginSet() {
+    public boolean isPluginSet() {
         return plugin != null;
     }
 
@@ -51,8 +52,8 @@ public final class EntitySerializer {
      *
      * @return StructureManager Object
      */
-    public static StructureManager getManager() {
-        return plugin.getServer().getStructureManager();
+    public StructureManager getManager() {
+        return manager;
     }
 
     /**
@@ -60,7 +61,7 @@ public final class EntitySerializer {
      *
      * @return EntityHolder Object.
      */
-    public static EntityHolder getEntityHolder() {
+    public EntityHolder getEntityHolder() {
         return entityHolder;
     }
 
@@ -68,9 +69,10 @@ public final class EntitySerializer {
      * Initializes variables.
      * IMPORTANT NOTE: THIS SHOULD NOT BE USED OUTSIDE OF API INTERNALS. THIS IS NOT FOR YOU.
      */
-    private static void initialize() {
-        entityHolder = new EntityHolder();
-        factory = new StructureFactory();
+    private void initialize() {
+        manager = plugin.getServer().getStructureManager();
+        entityHolder = new EntityHolder(manager, factory);
+        factory = new StructureFactory(manager);
         random = new Random();
     }
 
@@ -79,7 +81,7 @@ public final class EntitySerializer {
      *
      * @return StructureFactory Instance
      */
-    public static StructureFactory getFactory() {
+    public StructureFactory getFactory() {
         return factory;
     }
 
@@ -88,7 +90,7 @@ public final class EntitySerializer {
      *
      * @return Random Object.
      */
-    public static Random getRandom() {
+    public Random getRandom() {
         return random;
     }
 

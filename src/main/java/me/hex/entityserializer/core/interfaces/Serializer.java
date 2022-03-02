@@ -7,7 +7,7 @@ import java.util.concurrent.CompletableFuture;
  * @param <T> Info needed to serialize
  * @param <Y> Result of serializing.
  */
-public interface Serializer<T, Y> {
+public interface Serializer<T, Y, K> {
 
     /**
      * Serializes T to Y.
@@ -18,11 +18,11 @@ public interface Serializer<T, Y> {
     Y serialize(T toSerialize, Y serialKey);
 
     /**
-     * Deserializes Y To T.
+     * Deserializes Y To K.
      * @param toDeserialize Info to Deserialize from (Serial key)
      * @return Deserialized form. (T)
      */
-    T deserialize(Y toDeserialize);
+    K deserialize(Y toDeserialize);
 
     /**
      * Destroys the serialization

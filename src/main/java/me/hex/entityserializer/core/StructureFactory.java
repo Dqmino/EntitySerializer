@@ -1,6 +1,5 @@
 package me.hex.entityserializer.core;
 
-import me.hex.entityserializer.EntitySerializer;
 import me.hex.entityserializer.core.interfaces.Factory;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
@@ -16,6 +15,12 @@ import java.util.concurrent.ExecutionException;
  */
 public class StructureFactory implements Factory<Entity, NamespacedKey, Structure> {
 
+    private final StructureManager manager;
+
+    public StructureFactory(StructureManager manager){
+        this.manager = manager;
+    }
+
     /**
      * IMPORTANT NOTE: DO NOT USE THIS METHOD, IT'S FOR THE API INTERNALS.
      * Creates a structure around the entity.
@@ -27,18 +32,17 @@ public class StructureFactory implements Factory<Entity, NamespacedKey, Structur
     @Override
     public Structure create(Entity entity, NamespacedKey keyToStruct) {
 
-        StructureManager manager = EntitySerializer.getManager();
         Structure struct = manager.createStructure();
 
 
         struct.fill(entity.getLocation(), entity.getLocation()
-                .add(0, 3, 0), true);
+                .add(1, 1, 1), true);
 
         manager.registerStructure(keyToStruct, struct);
 
         CompletableFuture<Boolean> future = CompletableFuture.supplyAsync(() -> {
             try {
-                EntitySerializer.getManager().saveStructure(keyToStruct, struct);
+                manager.saveStructure(keyToStruct, struct);
                 return true;
             } catch (IOException e) {
                 e.printStackTrace();
@@ -67,10 +71,10 @@ public class StructureFactory implements Factory<Entity, NamespacedKey, Structur
      */
     @Override
     public CompletableFuture<Boolean> destroy(NamespacedKey key) {
-        StructureManager manager = EntitySerializer.getManager();
+
         manager.unregisterStructure(key);
 
-        CompletableFuture<Boolean> future = CompletableFuture.supplyAsync(() -> {
+        return CompletableFuture.supplyAsync(() -> {
             try {
                 manager.deleteStructure(key);
                 return true;
@@ -79,7 +83,5 @@ public class StructureFactory implements Factory<Entity, NamespacedKey, Structur
                 return false;
             }
         }).toCompletableFuture();
-
-        return future;
     }
 }
