@@ -50,11 +50,11 @@ implementation 'com.github.2Hex:EntitySerializer:Tag'
 
 # Usage
 
-First, you have to call
+First, you have to create an object of EntitySerializer in your onEnable:
+
 ```Java
-EntitySerializer.setPlugin(this);
+EntitySerializer entitySerializer = new EntitySerializer();
 ```
-In your main class onEnable.
 
 Then make a variable, referencing the class EntityHolder:
 
@@ -65,7 +65,7 @@ private static EntityHolder holder;
 then on your onEnable again:
 
 ```Java
-holder = new EntityHolder();
+holder = entitySerializer.getEntityHolder();
 ```
 
 Then make a static getter:
@@ -79,22 +79,14 @@ Then later in whatever class, you can use
 ```Java
 NamespacedKey namespacedkey = new NamespacedKey(pluginInstance, "your-key-here");
         YourMainClass.getHolder().serialize(entity, namespackedkey);
-        Entity entityDeserialized = YourMainClass.getHolder().deserialize(namespacedkey);
+        EntityResult entityDeserialized = YourMainClass.getHolder().deserialize(namespacedkey);
 ```
+**Note that you should have a unique namespacedkey for each unique entity serialization.**
+
+You can invoke `spawnAndGet()` (which will return the entity and spawn it) on the EntityResult later, or `spawn`.
+
 
 And to Destroy a serialization (Remove its access, and its place in server storage) Use:
 ```Java
 YourMainClass.getHolder().destroy(namespacedkey)
 ```
-Note that you should have a namespacedkey for each entity.
-
-Or use
-```Java
-YourMainClass.getHolder().deserialize(namespacedkey, true)
-```
-
-Second one returns EntityResult, and is preferred.
-
-You can invoke `spawnAndGet()` (which will return the entity and spawn it) on the EntityResult later, or `spawn`.
-
-
