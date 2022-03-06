@@ -58,7 +58,7 @@ First, you have to create an object of EntitySerializer in your onEnable:
 EntitySerializer entitySerializer = new EntitySerializer(this);
 ```
 
-Then make a variable, referencing the class EntityHolder:
+Then make a variable, referencing the class EntityHandler:
 
 ```Java
 private static EntityHandler handler;
