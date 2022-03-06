@@ -55,7 +55,7 @@ implementation 'com.github.2Hex:EntitySerializer:Tag'
 First, you have to create an object of EntitySerializer in your onEnable:
 
 ```Java
-EntitySerializer entitySerializer = new EntitySerializer(this);
+EntitySerializer entitySerializer = EntitySerializer.create(this);
 ```
 
 Then make a variable, referencing the class EntityHandler:
