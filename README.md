@@ -55,41 +55,40 @@ implementation 'com.github.2Hex:EntitySerializer:Tag'
 First, you have to create an object of EntitySerializer in your onEnable:
 
 ```Java
-EntitySerializer entitySerializer = new EntitySerializer();
-entitySerializer.setPlugin(this);
+EntitySerializer entitySerializer = new EntitySerializer(this);
 ```
 
 Then make a variable, referencing the class EntityHolder:
 
 ```Java
-private static EntityHolder holder;
+private static EntityHandler handler;
 ```
 
 then on your onEnable again:
 
 ```Java
-holder = entitySerializer.getEntityHolder();
+handler = entitySerializer.getEntityHandler();
 ```
 
 Then make a static getter:
 
 ```Java
-public static EntityHolder getHolder() {
-        return holder;
-        }
+public static EntityHandler getHandler() {
+        return handler;
+}
 ```
 Then later in whatever class, you can use
 ```Java
 NamespacedKey namespacedkey = new NamespacedKey(pluginInstance, "your-key-here");
-        YourMainClass.getHolder().serialize(entity, namespackedkey);
-        EntityResult entityDeserialized = YourMainClass.getHolder().deserialize(namespacedkey);
+YourMainClass.getHandler().serialize(entity, namespackedkey);
+EntityHolder entityDeserialized = YourMainClass.getHandler().deserialize(namespacedkey);
 ```
 **Note that you should have a unique namespacedkey for each unique entity serialization.**
 
-You can invoke `spawnAndGet()` (which will return the entity and spawn it) on the EntityResult later, or `spawn`.
+You can invoke `spawnAndGet()` (which will return the entity and spawn it) on the EntityHolder later, or `spawn`.
 
 
 And to Destroy a serialization (Remove its access, and its place in server storage) Use:
 ```Java
-YourMainClass.getHolder().destroy(namespacedkey)
+YourMainClass.getHandler().destroy(namespacedkey)
 ```
