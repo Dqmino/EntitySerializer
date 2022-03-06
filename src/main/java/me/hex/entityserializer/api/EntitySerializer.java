@@ -14,6 +14,7 @@ public interface EntitySerializer {
 
     /**
      * Creates an instance of EntitySerializer.
+     *
      * @param plugin Your main class.
      * @return the instance of EntitySerializer created.
      */
@@ -34,6 +35,7 @@ public interface EntitySerializer {
 
     /**
      * Use this to de/serialize, destroy a serialization
+     *
      * @return The Serializer
      */
     Serializer<Entity, NamespacedKey, EntityHolder> getEntityHandler();

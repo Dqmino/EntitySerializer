@@ -8,6 +8,7 @@ public interface EntityHolder {
 
     /**
      * Spawns and gets the entity at the given location.
+     *
      * @param location Location to spawn the entity at.
      * @return the entity spawned
      * @throws EntityNotFoundException if entity was not found, [Should not happen]
@@ -16,6 +17,7 @@ public interface EntityHolder {
 
     /**
      * Spawns the entity at the given location
+     *
      * @param location Location to spawn the entity at.
      */
     void spawn(Location location);
