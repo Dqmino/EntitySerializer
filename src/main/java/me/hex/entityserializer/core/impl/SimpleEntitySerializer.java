@@ -33,7 +33,7 @@ public final class SimpleEntitySerializer implements EntitySerializer {
     /**
      * you should use this to serialize, and to deserialize.
      *
-     * @return SimpleEntityHandler Object.
+     * @return EntityHandler Object.
      */
     @Override
     public EntityHandler getEntityHandler() {

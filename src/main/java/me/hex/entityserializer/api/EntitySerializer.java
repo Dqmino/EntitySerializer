@@ -12,6 +12,11 @@ import org.bukkit.structure.StructureManager;
 
 public interface EntitySerializer {
 
+    /**
+     * Creates an instance of EntitySerializer.
+     * @param plugin Your main class.
+     * @return the instance of EntitySerializer created.
+     */
     static EntitySerializer create(JavaPlugin plugin) {
 
         Preconditions.checkArgument(plugin != null);
@@ -22,8 +27,15 @@ public interface EntitySerializer {
         return new SimpleEntitySerializer(plugin, simpleEntityHandler);
     }
 
+    /**
+     * @return User's plugin
+     */
     JavaPlugin getPlugin();
 
+    /**
+     * Use this to de/serialize, destroy a serialization
+     * @return The Serializer
+     */
     Serializer<Entity, NamespacedKey, EntityHolder> getEntityHandler();
 
 }
