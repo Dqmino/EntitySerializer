@@ -1,96 +1,73 @@
 package me.hex.entityserializer.api;
 
-import com.google.common.base.Preconditions;
-import me.hex.entityserializer.core.StructureFactory;
-import me.hex.entityserializer.core.interfaces.Serializer;
-import org.bukkit.NamespacedKey;
+import me.hex.entityserializer.core.exceptions.EntityNotFoundException;
+import org.bukkit.Location;
+import org.bukkit.block.structure.Mirror;
+import org.bukkit.block.structure.StructureRotation;
 import org.bukkit.entity.Entity;
 import org.bukkit.structure.Structure;
-import org.bukkit.structure.StructureManager;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
-public class EntityHolder implements Serializer<Entity, NamespacedKey, EntityResult> {
+public class EntityHolder {
 
-    private final StructureManager manager;
-    private final StructureFactory factory;
+    private final Structure structure;
 
-    public EntityHolder(StructureManager manager, StructureFactory factory) {
-        this.manager = manager;
-        this.factory = factory;
+    public EntityHolder(Structure structure) {
+        this.structure = structure;
     }
 
     /**
-     * Serializes an entity to Name-spaced Key specified.
-     * Note that this method uses 1.17.1 Structures API.
+     * Spawns the entity, and returns it.
      *
-     * @param toSerialize Key to use for later deserializing.
-     * @param removeAfter Whether to remove after serializing.
-     * @return Name-spaced Key used to serialize.
+     * @param location Location to spawn entity at.
+     * @return Entity spawned.
+     * @throws EntityNotFoundException if entity was not found. (Should not happen)
      */
-    @Override
-    public NamespacedKey serialize(Entity toSerialize, NamespacedKey serialKey, boolean removeAfter) {
+    public Entity spawnAndGet(Location location) throws EntityNotFoundException {
 
-        Preconditions.checkArgument(toSerialize != null && serialKey != null);
+        Location uppedLoc = location.add(0, ThreadLocalRandom.current()
+                .nextInt(750, 4000), 0);
 
-        factory.create(toSerialize, serialKey, removeAfter);
+        spawn(uppedLoc);
 
-        return serialKey;
+        Optional<Entity> closest = Arrays.stream(uppedLoc.getChunk().getEntities())
+                .min((e1, e2) -> (int) (e2.getLocation().distanceSquared(location)
+                        - e1.getLocation().distanceSquared(location)));
+
+        closest.ifPresent((e) -> handleTeleportation(e, location));
+        return closest.orElseThrow(() -> new EntityNotFoundException
+                ("Cannot find entity at location"));
     }
 
     /**
-     * Deserializes an entity from its corresponding Name-spaced Key specified.
-     * Note that this method uses 1.17.1 Structures API.
+     * Spawns the Entity at the given Location.
      *
-     * @param toDeserialize Key corresponding to the entity serialized.
-     * @return deserialized EntityResult from Name-spaced Key.
+     * @param loc Location to spawn entity at.
      */
-    @Override
-    public EntityResult deserialize(NamespacedKey toDeserialize) {
-
-        Preconditions.checkArgument(toDeserialize != null);
-
-        Structure structure = manager.getStructure(toDeserialize);
-
-        Preconditions.checkArgument(structure != null);
-
-        return new EntityResult(structure);
+    public void spawn(Location loc) {
+        structure.place(loc, true, StructureRotation.NONE, Mirror.NONE,
+                0, 0f, new Random());
     }
 
     /**
-     * Note that the entity will not exist, and you cant use this to spawn the entity.
-     * Reads an entity from its corresponding Name-spaced Key specified.
-     * Note that this method uses 1.17.1 Structures API.
+     * Handles teleportation to the location wanted.
      *
-     * @param toDeserialize Key corresponding to the entity serialized.
-     * @return deserialized entity from Name-spaced Key.
-     * @deprecated Might not work, use deserialize(NamespacedKey)
+     * @param closest  Entity to handle
+     * @param location Location to teleport to
      */
-
-    public Entity read(NamespacedKey toDeserialize) {
-
-        Preconditions.checkArgument(toDeserialize != null);
-
-        Structure structure = manager.getStructure(toDeserialize);
-
-        Preconditions.checkArgument(structure != null);
-
-        Entity entityExtracted = structure.getEntities().get(0);
-
-        Preconditions.checkArgument(entityExtracted != null
-                && structure.getEntities().size() == 1);
-
-        return entityExtracted;
+    private void handleTeleportation(Entity closest, Location location) {
+        if (closest == null) return;
+        if (!closest.isInvulnerable()) {
+            closest.setInvulnerable(true);
+            closest.teleport(location);
+            closest.setInvulnerable(false);
+        } else {
+            closest.teleport(location);
+        }
     }
 
-    /**
-     * Destroys a serialization
-     *
-     * @param toDestroy Key representing the serialization to destroy
-     * @return true if successful false otherwise.
-     */
-    @Override
-    public CompletableFuture<Boolean> destroy(NamespacedKey toDestroy) {
-        return factory.destroy(toDestroy);
-    }
 }
