@@ -1,6 +1,6 @@
 name: EntitySerializer
 version: '${project.version}'
-main: me.hex.entityserializer.EntitySerializer
+main: me.hex.entityserializer.core.impl.SimpleEntitySerializer
 api-version: 1.17
 authors: [2Hex]
 description: Turns an entity into a Namespacedkey, and vice versa!

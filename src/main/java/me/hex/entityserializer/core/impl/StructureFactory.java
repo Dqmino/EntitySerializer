@@ -1,4 +1,4 @@
-package me.hex.entityserializer.core;
+package me.hex.entityserializer.core.impl;
 
 import me.hex.entityserializer.core.interfaces.Factory;
 import org.bukkit.NamespacedKey;

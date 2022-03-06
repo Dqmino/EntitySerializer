@@ -1,15 +1,13 @@
-package me.hex.entityserializer;
+package me.hex.entityserializer.core.impl;
 
-import com.google.common.base.Preconditions;
 import me.hex.entityserializer.api.EntityHandler;
-import me.hex.entityserializer.core.StructureFactory;
+import me.hex.entityserializer.api.EntitySerializer;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.structure.StructureManager;
 
 /**
  * API's Main class, holding the core and essentials of the library.
  */
-public final class EntitySerializer {
+public final class SimpleEntitySerializer implements EntitySerializer {
 
     private final JavaPlugin plugin;
     private final EntityHandler entityHandler;
@@ -17,12 +15,9 @@ public final class EntitySerializer {
     /**
      * @param plugin Main class of your plugin.
      */
-    public EntitySerializer(JavaPlugin plugin) {
-        Preconditions.checkArgument(plugin != null);
-
+    public SimpleEntitySerializer(JavaPlugin plugin, EntityHandler handler) {
         this.plugin = plugin;
-        StructureManager manager = plugin.getServer().getStructureManager();
-        this.entityHandler = new EntityHandler(manager, new StructureFactory(manager));
+        this.entityHandler = handler;
     }
 
     /**
@@ -30,6 +25,7 @@ public final class EntitySerializer {
      *
      * @return Main instance of User's plugin if set, otherwise null
      */
+    @Override
     public JavaPlugin getPlugin() {
         return plugin;
     }
@@ -37,8 +33,9 @@ public final class EntitySerializer {
     /**
      * you should use this to serialize, and to deserialize.
      *
-     * @return EntityHandler Object.
+     * @return SimpleEntityHandler Object.
      */
+    @Override
     public EntityHandler getEntityHandler() {
         return entityHandler;
     }
