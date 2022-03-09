@@ -1,5 +1,6 @@
 # EntitySerializer
 [![](https://jitpack.io/v/2Hex/EntitySerializer.svg)](https://jitpack.io/#2Hex/EntitySerializer)
+[![CodeFactor](https://www.codefactor.io/repository/github/2hex/entityserializer/badge)](https://www.codefactor.io/repository/github/2hex/entityserializer)
 
 Serializes Entities, Basically converting them to namespacedkeys that can be used later, not exactly serializing with its common definition.
 
