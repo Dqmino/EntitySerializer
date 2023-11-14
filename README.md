@@ -25,9 +25,9 @@ Add this to your repositories
 Then add this to your dependencies
  ```HTML
 <dependency>
-    <groupId>com.github.2Hex</groupId>
+     <groupId>com.github.Dqmino</groupId>
     <artifactId>EntitySerializer</artifactId>
-    <version>Tag</version>
+    <version>v1.1</version>
 </dependency>
 ```
 
