@@ -47,8 +47,8 @@ And the dependency:
 
 ```HTML
 	dependencies {
-implementation 'com.github.2Hex:EntitySerializer:Tag'
-}
+	        implementation 'com.github.Dqmino:EntitySerializer:v1.1'
+	}
 ```
 
 # Usage
