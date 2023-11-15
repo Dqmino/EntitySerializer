@@ -87,6 +87,7 @@ EntityHolder entityDeserialized = YourMainClass.getHandler().deserialize(namespa
 **Note that you should have a unique namespacedkey for each unique entity serialization.**
 
 You can invoke `spawnAndGet()` (which will return the entity and spawn it) on the EntityHolder later, or `spawn`.
+and after that, you need to teleport it to your desired location.
 
 
 And to Destroy a serialization (Remove its access, and its place in server storage) Use:
